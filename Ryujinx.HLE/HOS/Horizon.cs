@@ -9,7 +9,6 @@ using Ryujinx.Audio.Output;
 using Ryujinx.Audio.Renderer.Device;
 using Ryujinx.Audio.Renderer.Server;
 using Ryujinx.Common;
-using Ryujinx.Common.Logging;
 using Ryujinx.Configuration;
 using Ryujinx.HLE.FileSystem.Content;
 using Ryujinx.HLE.HOS.Font;
@@ -321,8 +320,6 @@ namespace Ryujinx.HLE.HOS
 
                 // Reconfigure controllers
                 Device.Hid.RefreshInputConfig(ConfigurationState.Instance.Hid.InputConfig.Value);
-
-                Logger.Info?.Print(LogClass.Application, $"IsDocked toggled to: {State.DockedMode}");
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Ryujinx.Common.Logging;
 
 namespace Ryujinx.Common
 {
@@ -8,6 +9,13 @@ namespace Ryujinx.Common
         private ReaderWriterLock _readerWriterLock = new ReaderWriterLock();
         private bool _isInitialized = false;
         private T _value;
+
+        private string _loggedName;
+
+        public ReactiveObject(string loggedName = "")
+        {
+            _loggedName = loggedName;
+        }
 
         public event EventHandler<ReactiveEventArgs<T>> Event;
 
@@ -36,6 +44,11 @@ namespace Ryujinx.Common
 
                 if (!oldIsInitialized || !oldValue.Equals(_value))
                 {
+                    if (!string.IsNullOrEmpty(_loggedName))
+                    {
+                        Logger.Info?.Print(LogClass.Configuration, $"{_loggedName} set to: {_value}");
+                    }
+
                     Event?.Invoke(this, new ReactiveEventArgs<T>(oldValue, value));
                 }
             }
